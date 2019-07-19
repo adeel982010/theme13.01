@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-extend="stock_barcode_lines_template">
+    <t t-jquery=".o_barcode_line:first" t-operation="replace">
+        <div t-if="model == 'stock.picking'"
+            t-attf-class="o_barcode_line list-group-item d-flex flex-row flex-nowrap{{ !line.product_uom_qty ? ' o_highlight o_highlight_red' : '' }}"
+            t-att-data-id="line.virtual_id || line.id"
+            t-att-data-barcode="line.product_barcode"
+            t-att-data-highlight-warn="!line.product_uom_qty ? 'highlight' : null"
+        >
+            <div class="o_barcode_line_details flex-grow-1 flex-column flex-nowrap">
+                <div class="o_barcode_line_title pb-1"><i class="fa fa-fw fa-tags"/> <span class="product-label"><t t-esc="line.display_name"></t></span></div>
+                <div>
+                    <i class="fa fa-fw fa-cube"/>
+                    <span t-attf-class="o_barcode_scanner_qty text-monospace badge #{' '}"> <!-- @SLE: Eventually add contextual classes: "badge-warning", "badge-danger", "badge-success"  -->
+                        <span class="qty-done d-inline-block text-left" t-esc="line.qty_done"/>
+                        <span t-if="line.product_uom_qty" t-esc="'/ ' + line.product_uom_qty"/>
+                    </span>
+                    <span t-if="groups.group_uom" t-esc="line.product_uom_id[1]"/>
+                </div>
+                <div t-if="line.package_id || line.result_package_id">
+                    <i class="fa fa-fw fa-truck"/> <t t-if="line.package_id" t-esc="line.package_id[1]"></t> <span class="fa fa-long-arrow-right"></span> <t t-if="line.result_package_id" t-esc="line.result_package_id[1]"></t>
+                </div>
+                <div t-if="line.owner_id">
+                    <i class="fa fa-fw fa-user-o"/> <t t-esc="line.owner_id[1]"></t>
+                </div>
+                <div t-if="line.product_id.tracking !== 'none'">
+                    <i class="fa fa-barcode"/>
+                    <span class="o_line_lot_name"><t t-if="line.lot_name" t-esc="line.lot_name"></t></span>
+                    <span class="o_line_lot_id"><t t-if="! line.lot_name &amp;&amp; line.lot_id &amp;&amp; line.lot_id[1]" t-esc="line.lot_id[1]"></t></span>
+                </div>
+            </div>
+            <div class="o_barcode_line_qty_buttons d-flex align-items-center pl-4 flex-grow-2">
+                <span t-if="line.product_id.tracking === 'none' and model == 'stock.picking'">
+                    <a t-attf-href="#" class="btn o_barcode_scanner_dec_qty" aria-label="Remove one" title="Remove one">
+                        <i class="fa fa-minus" style="transform: scale(2) !important;"></i>
+                    </a>
+                </span>
+                <span t-if="line.product_id.tracking === 'none' and model == 'stock.picking'">
+                    <a t-attf-href="#" class="btn o_barcode_scanner_inc_qty" aria-label="Add one" title="Add one">
+                        <i class="fa fa-plus" style="transform: scale(2) !important;"></i>
+                    </a>
+                </span>
+            </div>
+            <div t-if="state != 'done' and state != 'cancel'" class="o_barcode_line_actions d-flex align-items-center pl-4">
+                <a class="o_edit text-muted" href="#" title="Edit"><i class="fa fa-pencil"/></a>
+            </div>
+        </div>
+    </t>
+</t>
+
+</templates>
