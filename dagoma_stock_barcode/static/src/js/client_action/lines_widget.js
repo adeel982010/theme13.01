@@ -18,7 +18,7 @@ odoo.define('dagoma_stock_barcode.LinesWidget', function (require) {
             $line.toggleClass('o_highlight_red', true);
         },
         incrementProduct: function(id_or_virtual_id, qty, model, doNotClearLineHighlight) {
-            this._super.apply(this, arguments);
+            this._super(id_or_virtual_id, qty, model, true);
 
             var $line = this.$("[data-id='" + id_or_virtual_id + "']");
 
