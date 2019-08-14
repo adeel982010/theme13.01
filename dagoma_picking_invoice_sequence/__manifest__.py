@@ -26,7 +26,8 @@
     'data':        [
         "views/delivery_carrier_views.xml",
         "views/product_category_views.xml",
-        "data/cron.xml"
+        "data/cron.xml",
+        "data/sequence.xml"
     ],
     # only loaded in demonstration mode
     'demo':        [],

@@ -27,5 +27,6 @@
     </field>
 </record>
 
+ <menuitem id="menu_stock_batch_picking" name="Batch Picking" parent="stock.menu_stock_root" action="delivery.action_delivery_carrier_form" sequence="150"/>
 
 </odoo>

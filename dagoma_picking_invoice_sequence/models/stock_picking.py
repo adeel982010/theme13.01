@@ -8,7 +8,6 @@ class StockPicking(models.Model):
 
     @api.multi
     def button_validate(self):
-        print(self, self._context)
         result = super(StockPicking, self).button_validate()
         
 # Create invoice automatically
@@ -48,20 +47,20 @@ class StockPicking(models.Model):
 
 
 # Print the correct label        
-        if not result:
-            if self.carrier_id.label_to_print =='carrier':
-                attachment = self.env['ir.attachment'].search([('res_model','=','stock.picking'),('res_id','=',self.id),('name','=like','Label%')])
-                action = {
-                    'name': attachment.name,
-                    'type': 'ir.actions.act_url',
-                    'url': "web/content/"+ str(attachment.id) + "?download=true",
-                    'target': 'self',
-                    }
-                return action
-            elif self.carrier_id.label_to_print =='delivery_slip':
-                return self.env.ref('stock.action_report_delivery').with_context(discard_logo_check=True).report_action(self)
-        else:
-            return result
+                if not result:
+                    if picking.carrier_id.label_to_print =='carrier':
+                        attachment = self.env['ir.attachment'].search([('res_model','=','stock.picking'),('res_id','=',picking.id),('name','=like','Label%')])
+                        action = {
+                            'name': attachment.name,
+                            'type': 'ir.actions.act_url',
+                            'url': "web/content/"+ str(attachment.id) + "?download=true",
+                            'target': 'self',
+                            }
+                        return action
+                    elif picking.carrier_id.label_to_print =='delivery_slip':
+                        return self.env.ref('stock.action_report_delivery').with_context(discard_logo_check=True).report_action(self)
+                else:
+                    return result
 
 
 
