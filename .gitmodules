@@ -1,4 +1,4 @@
-[submodule "rdeheele/dgm3"]
-	path = rdeheele/dgm3
+[submodule "rdeheele/dgm"]
+	path = rdeheele/dgm
 	url = git@github.com:rdeheele/dgm.git
 	branch = master
